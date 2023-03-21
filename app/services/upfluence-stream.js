@@ -1,5 +1,3 @@
-/* eslint-disable ember/classic-decorator-hooks */
-/* eslint-disable prettier/prettier */
 import Service from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import Evented from '@ember/object/evented';
@@ -9,8 +7,8 @@ export default class UpfluenceStreamService extends Service.extend(Evented) {
 
   eventSource = null;
 
-  init() {
-    super.init(...arguments);
+  constructor() {
+    super(...arguments);
 
     this.socialPosts = [];
 
@@ -19,7 +17,14 @@ export default class UpfluenceStreamService extends Service.extend(Evented) {
     this.eventSource.addEventListener('message', (event) => {
       const { data } = event;
       try {
-        const { pin, instagram_media, youtube_video, article, tweet, facebook_status } = JSON.parse(data);
+        const {
+          pin,
+          instagram_media,
+          youtube_video,
+          article,
+          tweet,
+          facebook_status,
+        } = JSON.parse(data);
         if (pin && pin.timestamp) {
           this.addSocialPost(pin.timestamp);
         }
@@ -51,6 +56,5 @@ export default class UpfluenceStreamService extends Service.extend(Evented) {
   addSocialPost(timestamp) {
     const socialPost = { timestamp };
     this.socialPosts = [socialPost, ...this.socialPosts];
-    this.trigger('newSocialPost', socialPost);
   }
 }
