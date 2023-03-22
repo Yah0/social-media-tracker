@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import Evented from '@ember/object/evented';
 
 export default class UpfluenceStreamService extends Service.extend(Evented) {
-  @tracked socialPosts;
+  @tracked socialPosts = [];
 
   eventSource = null;
 
