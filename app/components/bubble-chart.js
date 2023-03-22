@@ -19,11 +19,8 @@ export default class BubbleChartComponent extends Component {
     const chartData = {
       datasets: [
         {
-          label: 'Commit Activity by Day and Hour',
           data: [],
-          backgroundColor: 'rgba(255, 99, 132, 0.2)',
-          borderColor: 'rgba(255, 99, 132, 1)',
-          borderWidth: 1,
+          backgroundColor: 'rgba(255,0,0,1)',
         },
       ],
     };
@@ -66,8 +63,21 @@ export default class BubbleChartComponent extends Component {
           },
         },
       },
-      layouts: {
-        padding: 10,
+      plugins: {
+        legend: {
+          display: false,
+        },
+        tooltip: {
+          callbacks: {
+            label: (context) => {
+              const value = context.raw.actualValue;
+              return `Social media activity: ${value}`;
+            },
+          },
+        },
+      },
+      legend: {
+        display: false,
       },
     };
 
@@ -81,7 +91,7 @@ export default class BubbleChartComponent extends Component {
     this.interval = setInterval(() => {
       const socialPosts = this.upfluenceStream.socialPosts; // get updated social posts
 
-      // Iterate over the socialPosts and increment the appropriate element in the newData array
+      // Iterate over the socialPosts and increment the appropriate element in the array
       socialPosts.forEach((post) => {
         const date = new Date(post.timestamp * 1000);
         const hour = date.getHours();
@@ -90,17 +100,23 @@ export default class BubbleChartComponent extends Component {
       });
 
       chartData.datasets[0].data = [];
+      chartData.datasets[0].backgroundColor = [];
+
       data.forEach((hourData, hour) => {
         hourData.forEach((count, day) => {
+          const r = count > 15 ? 15 : count; // cap the radius at 15
+          const backgroundColor = `rgba(${255 - count * 2}, 0, 0, 1)`;
           chartData.datasets[0].data.push({
             x: hour,
             y: day,
-            r: count,
+            r: r,
+            actualValue: count,
           });
+          chartData.datasets[0].backgroundColor.push(backgroundColor);
         });
       });
       this.chart.update();
-    }, 5000);
+    }, 500);
   }
 
   willDestroy() {
