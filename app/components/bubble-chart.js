@@ -26,6 +26,7 @@ export default class BubbleChartComponent extends Component {
     };
 
     const options = {
+      responsive: true,
       scales: {
         x: {
           type: 'linear',
@@ -75,9 +76,6 @@ export default class BubbleChartComponent extends Component {
             },
           },
         },
-      },
-      legend: {
-        display: false,
       },
     };
 
