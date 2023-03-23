@@ -23,6 +23,7 @@ export default class BubbleChartComponent extends Component {
     const options = {
       responsive: true,
       maintainAspectRatio: false,
+      resizeDelay: 500,
       scales: {
         x: {
           type: 'linear',

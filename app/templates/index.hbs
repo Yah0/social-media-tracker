@@ -1,7 +1,12 @@
-<div>
+<div class="body-wrapper">
   <h2>Welcome to Social Media Tracker!</h2>
-  <p>We hope the displayed data is easy to understand.</p>
-  <BubbleChart />
-  <StopUploadButton />
-  <SocialPostsCounter />
+  <div class="content-wrapper">
+    <div class="header">
+      <SocialPostsCounter />
+      <StopUploadButton />
+    </div>
+    <div class="chart-container">
+      <BubbleChart />
+    </div>
+  </div>
 </div>

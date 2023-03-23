@@ -1,29 +1,76 @@
-div {
-    text-align: center;
-    margin: 20px;
-  }
-  
-  h2 {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  p {
-    font-size: 18px;
-    margin-bottom: 20px;
-  }
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
-  .chart-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-width: 100%;
-    min-width: 600px;
-    margin: 0 auto;
-  }
-  
-  .chart-container canvas {
-    width: 100%;
-    height: 100%;
-  }
+html,
+body {
+  font-family: 'Roboto', sans-serif;
+  height: 100vh;
+  /* min-height: 100vh; */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  /* Add box-sizing to include padding in width and height calculation */
+  box-sizing: border-box;
+}
+
+.body-wrapper {
+  height: 100%;
+}
+
+.content-wrapper {
+  height: 100%;
+  width: 80%;
+  margin: auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  margin-bottom: 0;
+}
+
+div {
+  text-align: center;
+  margin: 0;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+p {
+  font-size: 18px;
+}
+
+button {
+  background-color: #ff3333;
+  color: white;
+  border-radius: 25px;
+  padding: 10px 20px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+  border: none;
+  cursor: pointer;
+}
+
+.chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: auto;
+  margin: 1rem auto;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+  padding: 1rem
+}
+
+.chart-container canvas {
+  width: 100%;
+  height: 100%;
+}
