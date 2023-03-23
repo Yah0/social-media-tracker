@@ -11,16 +11,11 @@ export default class BubbleChartComponent extends Component {
 
   @action
   async createChart(element) {
-    // Initialize an array to hold the data for each hour and day of the week
-    const data = Array(24)
-      .fill()
-      .map(() => Array(7).fill(0));
-
     const chartData = {
       datasets: [
         {
           data: [],
-          backgroundColor: 'rgba(255,0,0,1)',
+          backgroundColor: [],
         },
       ],
     };
@@ -72,7 +67,8 @@ export default class BubbleChartComponent extends Component {
         tooltip: {
           callbacks: {
             label: (context) => {
-              const value = context.raw.actualValue;
+              const dataset = chartData.datasets[context.datasetIndex];
+              const value = dataset.data[context.dataIndex].r;
               return `Social media activity: ${value}`;
             },
           },
@@ -90,32 +86,37 @@ export default class BubbleChartComponent extends Component {
     this.interval = setInterval(() => {
       const socialPosts = this.upfluenceStream.socialPosts; // get updated social posts
 
-      // Iterate over the socialPosts and increment the appropriate element in the array
       socialPosts.forEach((post) => {
         const date = new Date(post.timestamp * 1000);
         const hour = date.getHours();
         const day = date.getDay();
-        data[hour][day]++;
-      });
 
-      chartData.datasets[0].data = [];
-      chartData.datasets[0].backgroundColor = [];
+        // Check if a bubble with the same date and time already exists in the chart data
+        const dataObject = chartData.datasets[0].data.find((dataObject) => {
+          return dataObject.x === hour && dataObject.y === day;
+        });
 
-      data.forEach((hourData, hour) => {
-        hourData.forEach((count, day) => {
-          const r = count > 15 ? 15 : count; // cap the radius at 15
-          const backgroundColor = `rgba(${255 - count * 2}, 0, 0, 1)`;
+        if (dataObject) {
+          // If a bubble already exists, increment its r value
+          dataObject.r++;
+        } else {
+          // If a bubble doesn't exist, add a new bubble to the chart data
+          const r = 1;
+          const backgroundColor = `rgba(${255 - r * 2}, 0, 0, 1)`;
           chartData.datasets[0].data.push({
             x: hour,
             y: day,
             r: r,
-            actualValue: count,
           });
           chartData.datasets[0].backgroundColor.push(backgroundColor);
-        });
+        }
       });
+
+      // Remove the posts that have already been added to the chart
+      this.upfluenceStream.socialPosts.splice(0, socialPosts.length);
+
       this.chart.update();
-    }, 500);
+    }, 1000);
   }
 
   willDestroy() {
