@@ -1,26 +1,24 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'social-media-tracker/tests/helpers';
+import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
 module('Integration | Component | social-posts-counter', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function (assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
+  test('it displays the number of social posts', async function (assert) {
+    // Set up the test data
+    const upfluenceStreamStub = {
+      socialPostsCounter: 10,
+    };
+    this.owner.register('service:upfluence-stream', upfluenceStreamStub, {
+      instantiate: false,
+    });
 
+    // Render the component
     await render(hbs`<SocialPostsCounter />`);
 
-    assert.dom(this.element).hasText('');
-
-    // Template block usage:
-    await render(hbs`
-      <SocialPostsCounter>
-        template block text
-      </SocialPostsCounter>
-    `);
-
-    assert.dom(this.element).hasText('template block text');
+    // Check that the number of social posts is displayed correctly
+    assert.dom('p').hasText('Number of social posts on the chart: 10');
   });
 });
