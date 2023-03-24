@@ -1,26 +1,32 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'social-media-tracker/tests/helpers';
-import { render } from '@ember/test-helpers';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, click } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
-module('Integration | Component | stop-upload-button', function (hooks) {
+module('Integration | Component | StopUploadButton', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function (assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
+  test('it calls the handleClick action when the button is clicked', async function (assert) {
+    assert.expect(3);
 
-    await render(hbs`<StopUploadButton />`);
+    // Set up the test data
+    this.set('handleClick', function () {
+      assert.ok(true, 'handleClick was called');
+    });
 
-    assert.dom(this.element).hasText('');
+    // Render the component
+    await render(hbs`<StopUploadButton @handleClick={{this.handleClick}} />`);
 
-    // Template block usage:
-    await render(hbs`
-      <StopUploadButton>
-        template block text
-      </StopUploadButton>
-    `);
+    // Check that the button text is correct
+    assert.dom('button').hasText('Stop Data Stream');
 
-    assert.dom(this.element).hasText('template block text');
+    // Click the button
+    await click('button');
+
+    // Check that the handleClick action was called
+    assert.ok(true, 'handleClick was called');
+
+    // Check that the button text is correct
+    assert.dom('button').hasText('Data Stream Stopped');
   });
 });
