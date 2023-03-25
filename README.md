@@ -1,7 +1,29 @@
 # social-media-tracker
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+The purpose of the app is to show how many social posts are being posted during the week. Based on the chart we can analyze which period of time has the most traffic.
+
+Data comes from Upfluence data stream which is a publicly available HTTP API endpoint streaming some of the posts processed by Upfluence system in real-time (It uses SSE technology). Data comes from apps like YouTube, Instagram, Twitter, Pinterest, Facebook.
+
+## TODO in the upcoming versions
+
+* install Sinon.JS to stub data in tests (I've ran to the issues when installing dependency. It has probably to do with Ember version 4.11. Maybe changeing Ember.JS version will be helpful).
+* add feature to the chart when hover on bubble show a pie chart where user can see from what platform data comes from on the specific hour of day.
+* implement Ember-Data to handle all data related actions.
+* follow a11y guidelines to make the app accessible.
+* make the app readable on mobile screen sizes. For now chart has a lot of data which overlap and is not readable on mobile sized screens.
+* think of a way do store the data even when the app is closed. For now during the page reload all data that was on the chart is lost.
+*
+
+## Trade-offs
+
+For now each time when the chart is updated, data from the endpoint that is already on the chart is deleted. 
+I picked up that approach because apart from chart there are no places in the app where the data is used. This approach speeds up the app.
+If there will be more features in the future that uses the endpoint data it may be resonable to store all the data.
+## Technical Choices
+
+* I've used the newest Ember.JS stable version.
+* I am not using any css pre-compiler because the styling is not for now complicated. No need to add another library at that point.
+* I didn't used Ember-Data cause my knowledge about Ember-Data at this point is not sufficient to develop the app quickly.
 
 ## Prerequisites
 
@@ -10,7 +32,6 @@ You will need the following things properly installed on your computer.
 * [Git](https://git-scm.com/)
 * [Node.js](https://nodejs.org/) (with npm)
 * [Ember CLI](https://cli.emberjs.com/release/)
-* [Google Chrome](https://google.com/chrome/)
 
 ## Installation
 
@@ -24,33 +45,12 @@ You will need the following things properly installed on your computer.
 * Visit your app at [http://localhost:4200](http://localhost:4200).
 * Visit your tests at [http://localhost:4200/tests](http://localhost:4200/tests).
 
-### Code Generators
-
-Make use of the many generators for code, try `ember help generate` for more details
-
 ### Running Tests
 
 * `ember test`
 * `ember test --server`
 
-### Linting
-
-* `npm run lint`
-* `npm run lint:fix`
-
-### Building
-
-* `ember build` (development)
-* `ember build --environment production` (production)
-
-### Deploying
-
-Specify what it takes to deploy your app.
-
-## Further Reading / Useful Links
+## Useful Links
 
 * [ember.js](https://emberjs.com/)
 * [ember-cli](https://cli.emberjs.com/release/)
-* Development Browser Extensions
-  * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
-  * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
