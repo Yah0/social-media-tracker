@@ -12,7 +12,7 @@ Data comes from Upfluence data stream which is a publicly available HTTP API end
 * follow a11y guidelines to make the app accessible.
 * make the app readable on mobile screen sizes. For now chart has a lot of data which overlap and is not readable on mobile sized screens.
 * think of a way do store the data even when the app is closed. For now during the page reload all data that was on the chart is lost.
-*
+* make the app SEO "friendly"
 
 ## Trade-offs
 
@@ -23,6 +23,7 @@ If there will be more features in the future that uses the endpoint data it may 
 
 * I've used the newest Ember.JS stable version.
 * I am not using any css pre-compiler because the styling is not for now complicated. No need to add another library at that point.
+* I've used Chart.js library to create the chart. It's for sure easier and more redable that creating the bubble chart on my own.
 * I didn't used Ember-Data cause my knowledge about Ember-Data at this point is not sufficient to develop the app quickly.
 
 ## Prerequisites
@@ -52,5 +53,8 @@ You will need the following things properly installed on your computer.
 
 ## Useful Links
 
+* [Chart.js](https://www.chartjs.org/)
+* [Sinon.JS](https://sinonjs.org/)
+* [EmberData](https://guides.emberjs.com/release/models/)
 * [ember.js](https://emberjs.com/)
 * [ember-cli](https://cli.emberjs.com/release/)
