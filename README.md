@@ -13,6 +13,7 @@ The data comes from Upfluence data stream, which is a publicly available HTTP AP
 * Make the app readable on mobile screen sizes. For now, the chart has a lot of data that overlaps and is not readable on mobile-sized screens.
 * Think of a way to store the data even when the app is closed. For now, during the page reload, all data that was on the chart is lost.
 * Make the app SEO-friendly.
+* Create Restart button to clear all the chart data.
 
 ## Trade-offs
 
