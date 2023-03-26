@@ -2,7 +2,6 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import Chart from 'chart.js/auto';
 
 module('Integration | Component | bubble-chart', function (hooks) {
   setupRenderingTest(hooks);

@@ -13,7 +13,10 @@ module('Unit | Service | upfluence-stream', function (hooks) {
 
     this.service.setupEventSource();
 
-    assert.ok(this.service.eventSource instanceof EventSource, 'event source is initialized');
+    assert.ok(
+      this.service.eventSource instanceof EventSource,
+      'event source is initialized'
+    );
     assert.ok(this.service.isStreaming, 'isStreaming is set to true');
   });
 
@@ -31,7 +34,11 @@ module('Unit | Service | upfluence-stream', function (hooks) {
 
     this.service.handleMessageEvent(event);
 
-    assert.deepEqual(this.service.socialPosts, [socialPost], 'social post is added to socialPosts array');
+    assert.deepEqual(
+      this.service.socialPosts,
+      [socialPost],
+      'social post is added to socialPosts array'
+    );
   });
 
   test('handleMessageEvent does not add social post to the socialPosts array when data is invalid', function (assert) {
@@ -42,7 +49,11 @@ module('Unit | Service | upfluence-stream', function (hooks) {
 
     this.service.handleMessageEvent(event);
 
-    assert.deepEqual(this.service.socialPosts, [], 'social post is not added to socialPosts array');
+    assert.deepEqual(
+      this.service.socialPosts,
+      [],
+      'social post is not added to socialPosts array'
+    );
   });
 
   test('handleErrorEvent logs an error to the console', function (assert) {
@@ -53,7 +64,11 @@ module('Unit | Service | upfluence-stream', function (hooks) {
     const consoleError = console.error;
 
     console.error = (msg) => {
-      assert.strictEqual(msg, 'Error receiving streaming data', 'error is logged to the console');
+      assert.strictEqual(
+        msg,
+        'Error receiving streaming data',
+        'error is logged to the console'
+      );
     };
 
     this.service.handleErrorEvent(event);
