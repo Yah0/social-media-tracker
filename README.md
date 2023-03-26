@@ -14,6 +14,8 @@ The data comes from Upfluence data stream, which is a publicly available HTTP AP
 * Think of a way to store the data even when the app is closed. For now, during the page reload, all data that was on the chart is lost.
 * Make the app SEO-friendly.
 * Create Restart button to clear all the chart data.
+* Create a custom modifier to replace did-insert to update the chart each time when the socialPosts object from service is changed. It should only at the beginning create the chart then after creation just update it when the data has changed.
+* Write better test for bubble-chart component.
 
 ## Trade-offs
 
