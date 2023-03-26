@@ -1,26 +1,36 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'social-media-tracker/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import Chart from 'chart.js/auto';
 
 module('Integration | Component | bubble-chart', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function (assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
+  test('it renders the bubble chart', async function (assert) {
+    const chartData = {
+      datasets: [
+        {
+          data: [
+            { x: 0, y: 0, r: 1 },
+            { x: 1, y: 1, r: 2 },
+            { x: 2, y: 2, r: 3 },
+            { x: 3, y: 3, r: 4 },
+          ],
+          backgroundColor: [
+            'rgba(255, 0, 0, 1)',
+            'rgba(255, 0, 0, 0.8)',
+            'rgba(255, 0, 0, 0.6)',
+            'rgba(255, 0, 0, 0.4)',
+          ],
+        },
+      ],
+    };
 
-    await render(hbs`<BubbleChart />`);
+    this.set('chartData', chartData);
 
-    assert.dom(this.element).hasText('');
+    await render(hbs`<BubbleChart @chartData={{this.chartData}} />`);
 
-    // Template block usage:
-    await render(hbs`
-      <BubbleChart>
-        template block text
-      </BubbleChart>
-    `);
-
-    assert.dom(this.element).hasText('template block text');
+    assert.ok(this.element.querySelector('canvas'), 'The chart was rendered');
   });
 });
