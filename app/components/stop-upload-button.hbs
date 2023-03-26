@@ -1,1 +1,1 @@
-<button type="button" onclick={{this.handleClick}}>{{if this.isStreaming "Stop Data Stream" "Data Stream Stopped"}}</button>
+<button type="button" {{on "click" this.handleClick}}>{{if this.isStreaming "Stop Data Stream" "Start Data Stream"}}</button>

@@ -9,7 +9,13 @@ export default class StopUploadButtonComponent extends Component {
 
   @action
   handleClick() {
-    this.upfluenceStream.eventSource.close();
-    this.isStreaming = false;
+    if (this.isStreaming) {
+      this.upfluenceStream.eventSource.close();
+      this.isStreaming = false;
+      this.upfluenceStream.isStreaming = false;
+    } else {
+      this.upfluenceStream.setupEventSource();
+      this.isStreaming = true;
+    }
   }
 }
