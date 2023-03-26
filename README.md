@@ -17,6 +17,7 @@ The data comes from Upfluence data stream, which is a publicly available HTTP AP
 * Create a custom modifier to replace did-insert to update the chart each time when the socialPosts object from service is changed. It should only at the beginning create the chart then after creation just update it when the data has changed.
 * Write better test for bubble-chart component.
 * Delete setInterval method in the chart component. For now it's running even when the event from service is stopped.
+* Prevent bubbles expanding for some size (big bubbles make chart unreadable).
 
 ## Trade-offs
 
