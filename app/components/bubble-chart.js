@@ -1,13 +1,27 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import Chart from 'chart.js/auto';
 import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
+import Chart from 'chart.js/auto';
 
 export default class BubbleChartComponent extends Component {
   @service upfluenceStream;
 
-  chart = null;
-  interval = null;
+  @tracked chart = null;
+  @tracked interval = null;
+
+  constructor() {
+    super(...arguments);
+    this.setupInterval();
+  }
+
+  setupInterval() {
+    this.interval = setInterval(() => {
+      if (this.upfluenceStream.isStreaming) {
+        this.updateChart();
+      }
+    }, 4000);
+  }
 
   @action
   async createChart(element) {
@@ -82,46 +96,42 @@ export default class BubbleChartComponent extends Component {
       data: chartData,
       options: options,
     });
+  }
 
-    // Update chart data every 5 seconds
-    this.interval = setInterval(() => {
-      const socialPosts = this.upfluenceStream.socialPosts; // get updated social posts
+  @action
+  updateChart() {
+    const chartData = this.chart.data;
 
-      socialPosts.forEach((post) => {
-        const date = new Date(post.timestamp * 1000);
-        const hour = date.getHours();
-        const day = date.getDay();
+    const socialPosts = this.upfluenceStream.socialPosts;
 
-        // Check if a bubble with the same date and time already exists in the chart data
-        const dataObject = chartData.datasets[0].data.find((dataObject) => {
-          return dataObject.x === hour && dataObject.y === day;
-        });
+    socialPosts.forEach((post) => {
+      const date = new Date(post.timestamp * 1000);
+      const hour = date.getHours();
+      const day = date.getDay();
 
-        if (dataObject) {
-          // If a bubble already exists, increment its r value
-          dataObject.r++;
-        } else {
-          // If a bubble doesn't exist, add a new bubble to the chart data
-          const r = 1;
-          const backgroundColor = `rgba(${255 - r * 2}, 0, 0, 1)`;
-          chartData.datasets[0].data.push({
-            x: hour,
-            y: day,
-            r: r,
-          });
-          chartData.datasets[0].backgroundColor.push(backgroundColor);
-        }
+      const dataObject = chartData.datasets[0].data.find((dataObject) => {
+        return dataObject.x === hour && dataObject.y === day;
       });
 
-      // Remove the posts that have already been added to the chart
-      this.upfluenceStream.socialPosts.splice(0, socialPosts.length);
+      if (dataObject) {
+        dataObject.r++;
+      } else {
+        const r = 1;
+        const backgroundColor = `rgba(${255 - r * 2}, 0, 0, 1)`;
+        chartData.datasets[0].data.push({
+          x: hour,
+          y: day,
+          r: r,
+        });
+        chartData.datasets[0].backgroundColor.push(backgroundColor);
+      }
+    });
+    this.upfluenceStream.socialPosts.splice(0, socialPosts.length);
 
-      this.chart.update();
-    }, 1000);
+    this.chart.update();
   }
 
   willDestroy() {
-    // Clear the interval when the component is destroyed
     super.willDestroy(...arguments);
     clearInterval(this.interval);
   }
